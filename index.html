@@ -68,15 +68,6 @@
       z-index: 0;
     }
 
-    .slide-video-bg-b {
-      opacity: 0;
-      transition: opacity 1200ms ease;
-    }
-
-    .slide[data-video-crossfade="true"] .slide-video-bg-b {
-      opacity: 1;
-    }
-
     .intro-stage {
       position: absolute;
       inset: 0;
@@ -286,13 +277,8 @@
 </head>
 <body>
   <main class="stage" id="stage">
-    <section class="slide" id="slide" data-card-open="false" data-sequence-ready="false" data-intro-done="false" data-started="false" data-open-complete="false" data-grass-hidden="false" data-video-crossfade="false" aria-label="Slide tỉ lệ 16:9">
-      <video class="slide-video-bg slide-video-bg-a" id="slideVideoA" autoplay loop muted playsinline aria-hidden="true">
-        <source src="slide-background.webm" type="video/webm">
-      </video>
-      <video class="slide-video-bg slide-video-bg-b" id="slideVideoB" autoplay loop muted playsinline aria-hidden="true">
-        <source src="slide-background.webm" type="video/webm">
-      </video>
+    <section class="slide" id="slide" data-card-open="false" data-sequence-ready="false" data-intro-done="false" data-started="false" data-open-complete="false" data-grass-hidden="false" aria-label="Slide tỉ lệ 16:9">
+      <img class="slide-video-bg" id="slideVideoA" src="slide-background.gif" alt="" aria-hidden="true">
       <button class="start-overlay" id="startOverlay" type="button" aria-label="Bắt đầu">
         <span>Chạm nhẹ để câu chuyện bắt đầu</span>
       </button>
@@ -315,7 +301,6 @@
     const stage = document.getElementById("stage");
     const slide = document.getElementById("slide");
     const slideVideoA = document.getElementById("slideVideoA");
-    const slideVideoB = document.getElementById("slideVideoB");
     const startOverlay = document.getElementById("startOverlay");
     const introStage = document.getElementById("introStage");
     const introSequence = document.getElementById("introSequence");
@@ -345,7 +330,6 @@
     let openSequenceStarted = false;
     let musicStarted = false;
     let introStarted = false;
-    let videoMixReady = false;
 
     function startMusic() {
       if (musicStarted) {
@@ -414,19 +398,7 @@
       }, grassFrameDuration);
     }
 
-    function syncBackgroundVideos() {
-      if (videoMixReady || !slideVideoA.duration || !slideVideoB.duration) {
-        return;
-      }
 
-      videoMixReady = true;
-      slideVideoB.currentTime = slideVideoA.duration / 2;
-      slideVideoB.play().catch(() => {});
-      setInterval(() => {
-        const shouldShowSecondVideo = slideVideoA.currentTime > slideVideoA.duration - 1.2;
-        slide.dataset.videoCrossfade = String(shouldShowSecondVideo);
-      }, 120);
-    }
 
     function playIntroSequence() {
       let frame = 0;
@@ -518,8 +490,7 @@
     preloadGrassFrames();
     preloadIntroFrames();
     preloadOpenFrames();
-    slideVideoA.addEventListener("loadedmetadata", syncBackgroundVideos);
-    slideVideoB.addEventListener("loadedmetadata", syncBackgroundVideos);
+
     setTimeout(() => {
       sequenceRevealTimerDone = true;
       revealOpenSequenceLayer();
