@@ -268,7 +268,28 @@
       transition: opacity 180ms ease;
     }
 
-    @media (max-width: 720px) {
+    /* Xoay ngang màn hình cho điện thoại khi ở chế độ dọc (portrait) */
+    @media screen and (orientation: portrait) and (max-width: 1024px) {
+      .stage {
+        width: 100vh;
+        height: 100vw;
+        transform: rotate(90deg);
+        transform-origin: center center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-left: -50vh;
+        margin-top: -50vw;
+      }
+      .slide {
+        width: 100vh;
+        height: 100vw;
+        max-width: none;
+      }
+    }
+
+    /* Đảm bảo tỉ lệ trên máy tính và màn hình ngang */
+    @media screen and (orientation: landscape) and (max-width: 720px) {
       .slide {
         width: min(100vw, calc(100vh * 16 / 9));
       }
