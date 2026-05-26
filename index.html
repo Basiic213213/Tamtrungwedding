@@ -125,7 +125,7 @@
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.96);
       transform-origin: center;
-      z-index: 2;
+      z-index: 10; /* Tăng z-index để nổi lên trên các lớp trang trí */
       transition: opacity 900ms ease;
       will-change: opacity, transform;
     }
@@ -183,12 +183,12 @@
 
     .seal-wrap {
       position: absolute;
-      inset: 50% auto auto 50%;
-      width: clamp(60px, 8vw, 110px); /* Kích thước vùng chứa = kích thước nút */
+      left: 50%;
+      top: 67%; /* Đưa về đúng vị trí con dấu trên ảnh centered-slide.png */
+      width: clamp(60px, 8vw, 110px);
       aspect-ratio: 1;
       transform: translate(-50%, -50%);
       z-index: 3;
-      /* background: rgba(255,0,0,0.2); Để debug nếu cần */
     }
 
     .seal-button {
@@ -211,7 +211,7 @@
       /* Vị trí cố định so với seal-wrap */
       left: 50%;
       top: 50%;
-      transform: translate(-105%,0%); /* Căn chỉnh theo tâm của wrap */
+      transform: translate(-105%, -40%); /* Căn chỉnh lại vì nút đã đổi top */
     }
 
     .slide[data-intro-done="true"] .arrow-gif {
