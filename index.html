@@ -183,19 +183,36 @@
 
     .seal-button {
       position: absolute;
-      left: 50%;
-      top: 67%;
-      width: 15%;
-      height: auto;
+      inset: 50% auto auto 50%;
+      width: clamp(60px, 8vw, 110px);
       aspect-ratio: 1;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      cursor: pointer;
-      padding: 0;
       transform: translate(-50%, -50%);
-      -webkit-tap-highlight-color: transparent;
-      appearance: none;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .arrow-gif {
+      position: absolute;
+      width: clamp(80px, 12vw, 160px);
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 500ms ease;
+      /* Vị trí trên bên trái nút bấm */
+      left: 50%;
+      top: 50%;
+      transform: translate(-140%, -140%);
+    }
+
+    .slide[data-intro-done="true"] .arrow-gif {
+      animation: arrowReveal 0.5s ease 2s forwards;
+    }
+
+    @keyframes arrowReveal {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .seal-button:hover,
@@ -312,6 +329,7 @@
       <div class="card-stage" aria-live="polite">
         <img class="card-art card-closed" src="centered-slide.png" alt="Thiệp cưới màu xanh đang đóng">
         <button class="seal-button" id="sealButton" type="button" aria-label="Mở thiệp"></button>
+        <img class="arrow-gif" src="arrow.gif" alt="">
       </div>
       <img class="grass-front" id="grassFront" src="grass-sequence-current/slide-background_00000.webp?v=grass-replaced-3" alt="">
     </section>
@@ -328,6 +346,7 @@
     const grassFront = document.getElementById("grassFront");
     const openSequence = document.getElementById("openSequence");
     const sealButton = document.getElementById("sealButton");
+    const arrowGif = document.querySelector(".arrow-gif");
     const weddingMusic = document.getElementById("weddingMusic");
     const grassFrameCount = 50;
     const grassFrameDuration = 70;
@@ -498,6 +517,7 @@
 
     sealButton.addEventListener("click", () => {
       slide.dataset.cardOpen = "true";
+      if (arrowGif) arrowGif.style.display = "none";
       setTimeout(() => {
         slide.dataset.grassHidden = "true";
       }, 3000);
