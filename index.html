@@ -247,7 +247,12 @@
       object-position: center;
       pointer-events: none;
       z-index: 11; /* Đưa lên trên card-stage (10) để tạo độ sâu */
+      opacity: 0; /* Mặc định ẩn lúc đầu */
       transition: opacity 1600ms ease;
+    }
+
+    .slide[data-intro-done="true"] .grass-front {
+      opacity: 1; /* Hiện lên khi intro hoàn tất */
     }
 
     .slide[data-grass-hidden="true"] .grass-front {
