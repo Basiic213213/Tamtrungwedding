@@ -128,10 +128,12 @@
       z-index: 10; /* Tăng z-index để nổi lên trên các lớp trang trí */
       transition: opacity 900ms ease;
       will-change: opacity, transform;
+      pointer-events: none; /* Mặc định không cho click để không chặn lớp bắt đầu */
     }
 
     .slide[data-intro-done="true"] .card-stage {
       animation: centerArtReveal 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      pointer-events: auto; /* Chỉ cho phép click khi intro đã chạy xong */
     }
 
     .card-art {
